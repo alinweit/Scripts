@@ -128,7 +128,7 @@
     }
 
     .list-content {
-      min-height: auto;
+      min-height: 50px;
       overflow-y: auto;
       font-size: 1.2em;
       width: 95%;
