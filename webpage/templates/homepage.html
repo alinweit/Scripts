@@ -1,0 +1,93 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{% static "calendar.js" %}"></script>
+    <script src="{% static "list.js" %}"></script>
+    <title>Startseite</title>
+    <link rel="stylesheet" href="{% static 'homepagestyle.css' %}">
+</head>
+<body>
+
+{% block content %}
+{% include 'base.html' %}
+<div class="Welcome">
+    <p>Wilkommen {{ users.email }}</p>
+</div>
+<div class="calendar">
+    <div class="calendar-header">
+        <a href="../{{ selected_date|date:'Y-m-d' }}/prev" class="prev-next-button" data-action="prev">&lt;</a>
+        <a>{{ selected_date|date:'F Y' }}</t>
+        <a href="../{{ selected_date|date:'Y-m-d' }}/next" class="prev-next-button" data-action="next">&gt;</a>   
+    </div>
+    <div class="calendar-body">
+        <table>
+            <thead>
+                <tr>
+                    <th>Mo</th>
+                    <th>Di</th>
+                    <th>Mi</th>
+                    <th>Do</th>
+                    <th>Fr</th>
+                    <th>Sa</th>
+                    <th>So</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for week in month_calendar %}
+                    <tr>
+                        {% for day in week %}
+                            {% if day %}
+                                <td {% if day == today.day and selected_date.month == today.month and selected_date.year == today.year %}class="today"{% endif %}>
+                                    {{ day }}
+                                    {% for event in month_events %}
+                                    {% endfor %}
+                                </td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="list">
+    <div class="list-header" onclick="toggleContent('listBookings')">
+        <p> Gebuchte Räume </p>
+    </div>
+    <div class="list-content" id="listBookings">
+        {% if bookings %}
+            {% for booking in bookings %}
+                <p>BuchungsNR: {{ booking.buchungsNR }}</p>
+                <p>E-Mail: {{ booking.userID }}</p>
+                <p>RaumNr_ID: {{ booking.raumNR }}</p>
+                <p>Datum: {{ booking.datum }}</p>
+            {% endfor %}
+        {% else %}
+            <a href="../../reservation">Keine Einträge. Raum hier buchen!</a>
+        {% endif %}
+    </div>
+    <div class="list-header" onclick="toggleContent('listFreeRooms')">        
+        <p> Freie Räume </p>
+    </div>
+    <div class="list-content" id="listFreeRooms">
+        {% if freerooms %}
+            {% for room in freerooms %}
+            <p>RaumNr: {{ room.raumNR }}</p>
+            <p>Bestuhlung: {{ room.bestuhlung }}</p>
+            <p>Ausstattung: {{ room.ausstattung }}</p>
+            {% endfor %}
+        {% else %}
+            <p>Keine Einträge.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

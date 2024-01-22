@@ -1,0 +1,90 @@
+{% load static %}
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Google Chrome">
+    <meta name = "viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type = "text/css" href="{% static 'login_style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel='stylesheet'>
+    <title>Login-Page</title>
+		<script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const passwordInput = document.querySelector('input[type="password"]');
+        const passwordToggle = document.querySelector('#password-toggle');
+        const rememberCheckbox = document.querySelector('#remember-checkbox');
+    
+        passwordToggle.addEventListener("click", function () {
+          if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            passwordToggle.classList.remove("fa-eye-slash");
+            passwordToggle.classList.add("fa-eye");
+          } else {
+            passwordInput.type = "password";
+            passwordToggle.classList.remove("fa-eye");
+            passwordToggle.classList.add("fa-eye-slash");
+          }
+        });
+    
+        const loginButton = document.querySelector('.btn');
+        loginButton.addEventListener("click", function () {
+          document.querySelector('form').submit();
+        });
+    
+        rememberCheckbox.addEventListener("change", function () {
+          const rememberValue = rememberCheckbox.checked;
+    
+          if (rememberValue) {
+            // Setze die Cookies nur, wenn die Checkbox aktiviert ist
+            document.cookie = `remember_user=${emailValue}; expires=${new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+            document.cookie = 'login_status=True; expires=' + new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString() + '; path=/';
+          } else {
+            // Lösche die Cookies, wenn die Checkbox deaktiviert ist
+            document.cookie = 'remember_user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            document.cookie = 'login_status=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+          }
+        });
+      });
+    </script>
+    
+  </head>
+  
+
+  <body>
+    <div class="wrapper{% if messages %} .wrapper.error{% endif %}">
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <h1>Login</h1>
+            
+            <div class="input-box">
+                <i class='bx bxs-user'></i>
+                {{ form.email }}
+            </div>
+
+            <div class="input-box">
+                <i id="password-toggle" class='far fa-eye-slash'></i>
+                {{ form.password }}
+            </div>
+
+            <div class="remember-forgot">
+                <label><input type="checkbox" id = "remember--checkbox"> Angemeldet bleiben </label>
+            </div>
+
+            {% if messages %}
+            <div class="message-box">
+              <ul>
+                {% for message in messages %}
+                  <li style="font-size: 14px;">{{ message }}</li>
+                {% endfor %}
+             </ul>
+           </div>
+          {% endif %}
+
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+</body>
+  
+</html>

@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+*{
+    margin: 100;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    }
+
+    body {
+        display: flex;
+        background: url("https://www.pngmagic.com/product_images/website-background-image-size-psd-vector-photo.jpg") no-repeat;
+        min-height: 100vh;
+        color: #fff;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .table {
+      width: 95%;
+      margin: 15px;;
+      margin-top: 150px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.1); /* Add a semi-transparent background for better readability */
+    }
+
+    th,
+    td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 12px;/
+    }
+
+    th:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: inherit;
+      filter: blur(10px); /* Adjust the blur effect */
+      z-index: -1;
+    }
+    
+    .header{
+      color: #fff;
+      font-size: 30px;
+      margin: 15px;;
+      margin-top: 150px;
+    }

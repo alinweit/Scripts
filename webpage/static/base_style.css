@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+#main-navbar{
+    display: table-caption;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 40px rgba(10,10,10,10);
+    min-height: 12vh;
+    font-size: 20px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    }
+
+    
+.navbar-nav .nav-link {
+    margin-right: 25px;
+    }
+
+.navbar-nav .nav-link:hover {
+    text-shadow: 0 0 5px #AAA6DA, 0 0 4px #AAA6DA,0 0 80px #AAA6DA;
+    transition-delay: 0.1s;
+    text-decoration: none;
+    border-radius: 9px;
+    }
+
+.navbar-nav{
+    font-size : 24.5px;
+    border-radius: 40%;
+    padding: 50px 20px 0px 10px; 
+    margin: 0px 25px;  
+    }
+
+#authstyle{
+    border-radius: 40%;
+    float: right;
+    }
+
+#authstyle a.btn {
+    margin-right: 50px;
+}
+
+
+#authstyle #header-links {
+    border-radius: 200px;
+    padding: 17px 48px; 
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 18.5px;
+    overflow: hidden;
+    transition: 0.2s;
+}
+
+#authstyle #header-links:hover {
+    color: #021f3b;
+    font-size: 18.5px;
+    border-radius: 6px;
+    background-color: #d5b1ff;
+    box-shadow: 0 0 10px #AAA6DA, 0 0 4px #AAA6DA, 0 0 80px #AAA6DA;
+    transition-delay: 0.1s;
+    text-decoration: none;
+    border-radius: 9px;
+}
+
+  #header-links{
+    margin-top: -10%;
+    margin-top: -20%;
+    position: relative;
+    border-radius: 200px;
+    display: inline-block;
+    padding: 10px 25px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 15px;
+    overflow: hidden;
+    transition: 0.2s;
+  }
+  #header-links:hover{
+    color: #021f3b;
+    font-size: 15px;
+    border-radius: 6px;
+    background-color: #d5b1ff;
+    box-shadow: 0 0 10px #AAA6DA, 0 0 4px #AAA6DA,0 0 80px #AAA6DA;
+    transition-delay: 0.1s;
+    text-decoration: none;
+    border-radius: 9px;
+  }
+  
+  body{
+  margin:0;
+  color:#fff;
+  
+  font:600 16px/18px 'Open Sans',sans-serif;
+  }
+  *,:after,:before{box-sizing:border-box}
+  .clearfix:after,.clearfix:before{content:'';display:table}
+  .clearfix:after{clear:both;display:block}
+  a{color:inherit;text-decoration:none}
