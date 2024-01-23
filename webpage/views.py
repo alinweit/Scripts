@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import User, Raeume, MyBookings
+from .models import Raeume, MyBookings
 from .forms import LoginForm
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from datetime import datetime, timedelta, date
@@ -16,23 +18,22 @@ def login(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
 
-            try:
-                user = User.objects.get(email=email, passwort=password)
-                
-                if user.email==email and user.passwort == password:
-                    remember_user = request.COOKIES.get('remember_user', user.email)
-                    login_status = request.COOKIES.get('login_status', 'True')
+            user = authenticate(email="email", password="password")
+            
+            if user is not None:
                     
-                    if remember_user:
-                        response = redirect('to_homepage')
-                        response.set_cookie('remember_user', remember_user, max_age=30)
-                        response.set_cookie('login_status', login_status, max_age=30)
-                        return response
-                    return redirect ('to_homepage')
-                    
-            except User.DoesNotExist:
-                messages.error(request, 'Email oder Passwort falsch!')
+                auth_login(request, user)
 
+                remember_user = request.COOKIES.get('remember_user', user.email)
+                login_status = request.COOKIES.get('login_status', 'True')
+                    
+                if remember_user:
+                    response = redirect('to_homepage')
+                    response.set_cookie('remember_user', remember_user, max_age=30)
+                    response.set_cookie('login_status', login_status, max_age=30)
+                    return response
+                return redirect ('to_homepage')
+                    
         else:
             messages.error(request, 'Email oder Passwort falsch!')
                         
