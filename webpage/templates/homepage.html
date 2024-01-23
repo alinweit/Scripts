@@ -68,6 +68,7 @@
                 <p>E-Mail: {{ booking.userID }}</p>
                 <p>RaumNr_ID: {{ booking.raumNR }}</p>
                 <p>Datum: {{ booking.datum }}</p>
+                <br>
             {% endfor %}
         {% else %}
             <a href="../../reservation">Keine Einträge. Raum hier buchen!</a>
@@ -82,9 +83,12 @@
             <p>RaumNr: {{ room.raumNR }}</p>
             <p>Bestuhlung: {{ room.bestuhlung }}</p>
             <p>Ausstattung: {{ room.ausstattung }}</p>
+            <br>
             {% endfor %}
         {% else %}
+            <br>
             <p>Keine Einträge.</p>
+            <br>
         {% endif %}
     </div>
 </div>

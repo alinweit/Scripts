@@ -72,7 +72,7 @@ def homepage(request, year, month, day):
 
     bookings =  MyBookings.objects.filter(datum=selected_date).values_list('raumNR_id', flat=True)
     freerooms = Raeume.objects.exclude(raumNR__in=bookings)
-    bookings = MyBookings.objects.filter(datum=selected_date).select_related('raumNR')
+    bookings = MyBookings.objects.filter(datum=selected_date).select_related('raumNR', 'userID')
    	
     context = {
 		'today': today,
