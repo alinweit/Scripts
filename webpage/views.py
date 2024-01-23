@@ -4,6 +4,7 @@ from .models import Raeume, MyBookings
 from .forms import LoginForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
@@ -15,13 +16,16 @@ def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data['email']
+            username = form.cleaned_data['email']
             password = form.cleaned_data['password']
-
-            user = authenticate(email="email", password="password")
             
-            if user is not None:
-                    
+        try:
+
+            user = User.objects.get(username=username)
+           
+            if check_password(password, user.password):
+                
+                user = authenticate(request, username=username, password=password)
                 auth_login(request, user)
 
                 remember_user = request.COOKIES.get('remember_user', user.email)
@@ -32,7 +36,15 @@ def login(request):
                     response.set_cookie('remember_user', remember_user, max_age=30)
                     response.set_cookie('login_status', login_status, max_age=30)
                     return response
-                return redirect ('to_homepage')
+                
+                return redirect('to_homepage')
+            
+            else:
+                messages.error(request, 'Email oder Passwort falsch!')
+
+        except User.DoesNotExist:
+
+            messages.error(request, 'Email oder Passwort falsch!')
                     
         else:
             messages.error(request, 'Email oder Passwort falsch!')
@@ -44,6 +56,7 @@ def login(request):
 
 
 def logout(request):
+    logout(request)
     return render(request, 'login.html')
 
 #@login_required
@@ -59,7 +72,7 @@ def homepage(request, year, month, day):
 
     bookings =  MyBookings.objects.filter(datum=selected_date).values_list('raumNR_id', flat=True)
     freerooms = Raeume.objects.exclude(raumNR__in=bookings)
-    bookings = MyBookings.objects.filter(datum=selected_date).select_related('raumNR', 'userID')
+    bookings = MyBookings.objects.filter(datum=selected_date).select_related('raumNR')
    	
     context = {
 		'today': today,

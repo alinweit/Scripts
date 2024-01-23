@@ -1,0 +1,59 @@
+
+<div class="table">
+    <div class="header">
+        <h2>Gebuchte Räume</h2>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Room Nr</th>
+          <th>Date</th>
+          <th>Room Setting</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for booking in bookings %}
+            <tr>
+            <td>{{ booking.datum }}</td>
+            <td>{{ booking.raumNR }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+--- HOmepaage list -- 
+
+<div class="list">
+    <div class="list-header" onclick="toggleContent('listBookings')">
+        <p> Gebuchte Räume </p>
+    </div>
+    <div class="list-content" id="listBookings">
+        {% if bookings %}
+            {% for booking in bookings %}
+                <p>BuchungsNR: {{ booking.buchungsNR }}</p>
+                <p>E-Mail: {{ booking.userID }}</p>
+                <p>RaumNr_ID: {{ booking.raumNR }}</p>
+                <p>Datum: {{ booking.datum }}</p>
+            {% endfor %}
+        {% else %}
+            <a href="../../reservation">Keine Einträge. Raum hier buchen!</a>
+        {% endif %}
+    </div>
+    <div class="list-header" onclick="toggleContent('listFreeRooms')">        
+        <p> Freie Räume </p>
+    </div>
+    <div class="list-content" id="listFreeRooms">
+        {% if freerooms %}
+            {% for room in freerooms %}
+            <p>RaumNr: {{ room.raumNR }}</p>
+            <p>Bestuhlung: {{ room.bestuhlung }}</p>
+            <p>Ausstattung: {{ room.ausstattung }}</p>
+            {% endfor %}
+        {% else %}
+            <p>Keine Einträge.</p>
+        {% endif %}
+    </div>
+</div>
