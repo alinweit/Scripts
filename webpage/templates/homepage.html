@@ -16,7 +16,7 @@
 {% block content %}
 {% include 'base.html' %}
 <div class="Welcome">
-    <p>Wilkommen {{ users.email }}</p>
+    <p>Wilkommen, {{ user.first_name }} {{ user.last_name }}!</p>
 </div>
 <div class="calendar">
     <div class="calendar-header">
@@ -44,8 +44,6 @@
                             {% if day %}
                                 <td {% if day == today.day and selected_date.month == today.month and selected_date.year == today.year %}class="today"{% endif %}>
                                     {{ day }}
-                                    {% for event in month_events %}
-                                    {% endfor %}
                                 </td>
                             {% else %}
                                 <td></td>
@@ -64,9 +62,9 @@
     <div class="list-content" id="listBookings">
         {% if bookings %}
             {% for booking in bookings %}
-                <p>BuchungsNR: {{ booking.buchungsNR }}</p>
+                <p>BuchungsNr: {{ booking.buchungsNR }}</p>
                 <p>E-Mail: {{ booking.userID }}</p>
-                <p>RaumNr_ID: {{ booking.raumNR }}</p>
+                <p>RaumNr: {{ booking.raumNR }}</p>
                 <p>Datum: {{ booking.datum }}</p>
                 <br>
             {% endfor %}
