@@ -30,7 +30,7 @@
       border-radius: 10px;
       padding: 20px 20px;
       transition: height 0.5s;
-      overflow: hidden;
+      overflow: auto;
     }
 
     th,
@@ -39,6 +39,7 @@
       border: 1px solid #dddddd;
       text-align: left;
       padding: 12px;
+      width : 100%;
     }
 
     th:before {
@@ -52,12 +53,6 @@
       filter: blur(10px);
       z-index: -1;
     }
-    
-    .checkbox-cell {
-      text-align: center;
-      width: 10%;
-    }
-
     
     .header{
       color: #fff;

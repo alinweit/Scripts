@@ -34,6 +34,8 @@
 #authstyle{
     border-radius: 40%;
     float: right;
+    margin-top: -20px;
+    margin-right: 45px;
     }
 
 #authstyle a.btn {

@@ -5,9 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'base_style.css' %}" type="text/css">
-
-
-  </head>
+  </head>a
+  <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="main-navbar">
         <div class="container">
           <a class="navbar-brand" href ="{% url 'to_homepage' %}"></a>
@@ -16,11 +15,11 @@
               <a class="nav-link active" aria-current="page" href="{% url 'to_homepage' %}">Start</a>
               <a class="nav-link" href ="{% url 'bookings' %}">Meine Buchungen</a>
               <a class="nav-link"  href ="{% url 'reservation' %}">Raum buchen</a>
-
             </div>
-            <form class="d-flex" id="authstyle">
-                <a  href ="{% url 'login' %}" class="btn" style="color: #333; background-color: #ffff;"type="submit" id="header-links"> Abmelden </a>
-            </form>
+            <form class="d-flex" id="authstyle" action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn" style="color: #333; background-color: #ffff; border: none; padding: 17px 48px; font: inherit; cursor: pointer;" id="header-links">Abmelden</button>
+            </form>          
           </div>
         </div>
     </nav>

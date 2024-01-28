@@ -3,22 +3,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=Google Chrome">
+    <script src="{% static "book_room.js" %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'reservation_style.css' %}">
-
+    <title>Reservierungs-Page</title>
 </head>
-<body>
 
+<body>
+  
 {% block content %}
 {% include 'base.html' %}
-<div id="text">
-    <form action="">
-      <h1>Reservations-Page</h1><br>
-      <h2>Hello</h2>
-    </form>    
-</div>
-{% endblock %}
+<div class="container" id="all">
+    <h3>Austattung:</h3>
+    <p>hoch: Klimatisiert, Webex-Board, Flipchart, Pinnwand ----- mittel: Klimatisiert, Bildschrim, Konferenztelefon, Flipchart ----- niedrig: Konferenztelefon, Flipchart</p>
+    <form method="post" action="{% url 'reservation' %}">
+        {% csrf_token %}
+        <label for="datum"></label>
+        <input type="date" id="datum" name="datum" onchange="this.form.submit()" {% if selected_date %} value="{{ selected_date|date:'Y-m-d' }}" {% endif %} required>
 
+        <label for="bestuhlung"></label>
+        <input type="number" id="bestuhlung" name="bestuhlung" onchange="this.form.submit()" placeholder="Bestuhlung">
+        
+        <input type="submit" value="Submit">
+    </form>    
+    {{ message }},
+    
+    {% if freerooms %}
+    <h2>Verfügbare Räume:</h2>
+    <table>
+        <tr> 
+            <th>Raum-Nr.</th>
+            <th>Bestuhlung</th>
+            <th>Ausstattung</th>
+            <th>Buchen</th>
+        </tr>
+        {% for room in freerooms %}
+            <tr>
+                <td>{{ room.raumNR }}</td>
+                <td>{{ room.bestuhlung }}</td>
+                <td>{{ room.ausstattung }}</td>
+                <td align=center>
+                    <button onclick="openPopUp(this)" id="book_button">📅</button>
+                    <div class="popup"> 
+                        <p> Möchten Sie für {{ selected_date }} den Raum {{ room.raumNR }} buchen? </p>
+                        <button onclick="book(this)" data-raum-nr="{{ room.raumNR }}" data-datum="{{ selected_date }}" data-user-id="{{ user.email }}" id="submit_button">Buchen</button><button onclick="closePopUp(this)" id="cancel_button">Abbrechen</button>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Es sind keine Räume verfügbar für das ausgewählte Datum.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
 </body>
 </html>

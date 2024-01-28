@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="{% static "delete_bookings.js" %}"></script>
     <title>Buchungen</title>
     <link rel="stylesheet" href="{% static 'bookings_style.css' %}">
 </head>
@@ -17,32 +19,37 @@
 <div class="header">
   <p>Gebuchte Räume</p>
 </div>
-
 <div class="table">
     <table>
-      <thead>
-        <tr>
-          <td class="checkbox-cell"><input type="checkbox"></td>
-          <th>Datum</th>
-          <th>Raum Nummer</th>
-          <th>Raum Ausstattung</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for booking in bookings %}
-        <tr>
-          <td class="checkbox-cell"><input type="checkbox"></td>    
-          <td>{{ booking.datum }}</td>
-          <td>{{ booking.raumNR }}</td>
-          {% with raum=booking.raumNR %}
-          <td>{{ raum.ausstattung }}</td>
-        {% endwith %}
-          </tr>            
-        {% endfor %}
+        <thead>
+            <tr>
+                <td>Raum auswählen</td>
+                <th>Datum</th>
+                {% if 'admin' in role %}
+                <th>User Email</th>
+                {% endif %}
+                <th>Raum Nummer</th>
+                <th>Raum Ausstattung</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td class="checkbox-cell">
+                    <input type="checkbox" name="selected_bookings" value= {{ booking.buchungsNR }}>
+                </td>
+                <td>{{ booking.datum }}</td>
+                {% if 'admin' in role %}
+                <td>{{ booking.userID.email }}</td>
+                {% endif %}
+                <td>{{ booking.raumNR }}</td>
+                <td>{{ booking.raumNR.ausstattung }}</td>
+            </tr>
+            {% endfor %}
+        <button id="removeSelectedBookings">Lösche die ausgewählten Räume</button>
         </tbody>
     </table>
 </div>
-
 {% endblock %}
 </body>
 </html>
